@@ -61,8 +61,8 @@ streamlit run app.py
 
 The application will open in your default web browser.
 
-Demo Credentials
-You can use the following credentials to log in:
+********Demo Credentials
+You can use the following credentials to log in: *********
 
 Student Login:
 
