@@ -1,0 +1,35 @@
+
+div.stButton > button {
+background-color: #A8BBA3; /* A soft green */
+color: #262730; /*  Dark text for contrast */
+border: 2px solid #A8BBA3;
+border-radius: 10px;
+padding: 10px 20px;
+font-weight: bold;
+transition: all 0.3s ease-in-out;
+}
+
+div.stButton > button:hover {
+background-color: #F7F4EA; /* Light background on hover /
+color: #B87C4C; / Accent color text on hover */
+border: 2px solid #B87C4C;
+}
+
+
+form .stButton > button {
+background-color: #B87C4C; /* Main accent color */
+color: #F7F4EA; /* Light text */
+border: 2px solid #B87C4C;
+}
+
+form .stButton > button:hover {
+background-color: #F7F4EA;
+color: #B87C4C;
+border: 2px solid #B87C4C;
+}
+
+/* Add some spacing and styling to the main title */
+h1 {
+color: #B87C4C;
+padding-bottom: 20px;
+}
