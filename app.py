@@ -131,8 +131,9 @@ def render_budget_tracking_page():
     st.header("Upload Your Expense File")
     st.markdown(
         """
-        Upload a CSV file with your recent transactions to get started.
-        The file should contain at least two columns: `Date`, `Description`, `Category`, and `Amount`.
+        Upload a CSV file with your recent transactions to get started.  
+        The file should contain at least these columns: `Date`, `Category`, and `Amount`.  
+        Or, you can use our **demo file** to explore the app.
         """
     )
 
@@ -140,26 +141,37 @@ def render_budget_tracking_page():
         "Choose a CSV file", type="csv", label_visibility="collapsed"
     )
 
+    # --- Case 1: User uploads a file ---
     if uploaded_file is not None:
         try:
             df = pd.read_csv(uploaded_file)
-            # Basic validation
-            required_cols = {'Date', 'Category', 'Amount'}
+            required_cols = {"Date", "Category", "Amount"}
             if not required_cols.issubset(df.columns):
                 st.error(
-                    f"CSV must contain the following columns: {', '.join(required_cols)}")
+                    f"CSV must contain the following columns: {', '.join(required_cols)}"
+                )
             else:
                 st.session_state.df = df
                 st.success("File uploaded successfully!")
         except Exception as e:
             st.error(f"An error occurred while processing the file: {e}")
 
+    # --- Case 2: No file uploaded → Use demo file ---
+    elif st.button("Use Demo File"):
+        try:
+            df = pd.read_csv("data/expense_data_1.csv")
+            st.session_state.df = df
+            st.success("Demo file loaded successfully!")
+        except Exception as e:
+            st.error(f"Could not load demo file: {e}")
+
+    # --- Display results if dataframe is available ---
     if st.session_state.df is not None:
         st.markdown("---")
         st.subheader("Budget Summary")
         summary = generate_budget_summary(st.session_state.df)
         for key, value in summary.items():
-            st.metric(label=key.replace('_', ' ').title(), value=value)
+            st.metric(label=key.replace("_", " ").title(), value=value)
 
         st.subheader("Recent Transactions")
         st.dataframe(st.session_state.df.tail())
