@@ -1,16 +1,31 @@
-import streamlit as st
-import pandas as pd
-from PIL import Image
-
-
-# Import custom modules for different functionalities
-from utils.auth import login_user
+from transformers import pipeline
+from nlp.chatbot import get_financial_advice
 from finance.analysis import (
     generate_budget_summary,
     generate_spending_insights,
     prepare_chart_data,
 )
-from nlp.chatbot import get_financial_advice
+from utils.auth import login_user
+import streamlit as st
+import pandas as pd
+from PIL import Image
+import os
+from dotenv import load_dotenv
+from huggingface_hub import login
+from transformers import pipeline
+
+
+@st.cache_resource
+def load_model():
+    generator = pipeline(
+        "text-generation",
+        model="ibm-granite/granite-3b-instruct",
+        token="HF_API_KEY"
+    )
+    return generator
+
+
+# Import custom modules for different functionalities
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
